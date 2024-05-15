@@ -1,0 +1,75 @@
+[gd_scene load_steps=10 format=3 uid="uid://tvnaixju4u2r"]
+
+[ext_resource type="Script" path="res://main_3d.gd" id="1_gno0j"]
+[ext_resource type="PackedScene" uid="uid://b6lcepsaf6dlf" path="res://main_2d.tscn" id="1_goj8h"]
+[ext_resource type="Script" path="res://main_2d.gd" id="3_5h2it"]
+[ext_resource type="Texture2D" uid="uid://dlrpfv1dvvi6y" path="res://Player.png" id="4_xvnqm"]
+[ext_resource type="Texture2D" uid="uid://ciqh5wy62tkkk" path="res://Enemy.png" id="5_2olil"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_32s1h"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_7n0nr"]
+sky_material = SubResource("ProceduralSkyMaterial_32s1h")
+
+[sub_resource type="Environment" id="Environment_65frf"]
+background_mode = 2
+sky = SubResource("Sky_7n0nr")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ngr1i"]
+height = 1.0
+
+[node name="Main3D" type="Node3D"]
+script = ExtResource("1_gno0j")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_65frf")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.913581, 0.406657, 0, -0.406657, 0.913581, 0, 2.5, 5)
+current = true
+fov = 45.0
+
+[node name="Control" type="Control" parent="Camera3D"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="Camera3D/Control"]
+layout_mode = 1
+offset_right = 256.0
+offset_bottom = 256.0
+
+[node name="SubViewport" type="SubViewport" parent="Camera3D/Control/SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(256, 256)
+render_target_update_mode = 4
+
+[node name="Camera2D" type="Camera2D" parent="Camera3D/Control/SubViewportContainer/SubViewport"]
+
+[node name="Main2D" parent="Camera3D/Control/SubViewportContainer/SubViewport" instance=ExtResource("1_goj8h")]
+script = ExtResource("3_5h2it")
+
+[node name="Player" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.600997)
+texture_filter = 0
+texture = ExtResource("4_xvnqm")
+
+[node name="Enemy" type="Sprite3D" parent="."]
+transform = Transform3D(0.999997, -0.00195749, 0.00172995, 0.00195859, 0.999998, -0.000630609, -0.0017287, 0.000634017, 0.999998, 0, 0, -0.300559)
+texture_filter = 0
+texture = ExtResource("5_2olil")
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.722, 0.4, -1.374)
+mesh = SubResource("CylinderMesh_ngr1i")

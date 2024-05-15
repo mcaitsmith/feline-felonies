@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://br8yep67n6v2e"]
+
+[ext_resource type="Texture2D" uid="uid://v56bgcujudyb" path="res://Enemy.png" id="1_bwfsi"]
+[ext_resource type="Texture2D" uid="uid://cog4i7klxg67d" path="res://Light.tres" id="2_5n6vo"]
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_wfmk4"]
+polygon = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8, 0, 0)
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+
+[node name="Enemy" type="Sprite2D" parent="."]
+light_mask = 0
+texture_filter = 1
+texture = ExtResource("1_bwfsi")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+color = Color(1, 0, 0, 1)
+blend_mode = 2
+shadow_enabled = true
+texture = ExtResource("2_5n6vo")
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+occluder = SubResource("OccluderPolygon2D_wfmk4")
