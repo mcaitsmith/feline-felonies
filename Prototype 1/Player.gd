@@ -2,6 +2,8 @@ extends CharacterBody2D
 
 const MOVEMENT_SPEED = 100
 
+##this is a commment I added with github!
+
 var x_axis_input : int = 0
 var y_axis_input : int = 0
 var input_vector : Vector2 = Vector2.ZERO 
